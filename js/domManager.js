@@ -1,21 +1,25 @@
 
 const domManager = {
     
-    loadIframes() {
-        $("#game")
-        .attr("src", "templates/game.html")
-        .on("load", () => {
-            $("#menu").attr("src", "templates/menu.html")
-        })
-    },
-
-    toggleMenu(element, hideOrShow) {
+    toggleElementById(element, hideOrShow) {
 
         const menu = $("#" + element);
         if (hideOrShow !== undefined) {
             return menu.toggle(hideOrShow);
         }
         menu.toggle();
+    },
+
+    async loadTemplates() {
+        const game = await $.get('../templates/game.html', function (data) {
+            var template=Handlebars.compile(data);
+            $("#game").html(template());
+        }, 'html');
+    
+        const menu = await $.get('../templates/menu.html', function (data) {
+            var template=Handlebars.compile(data);
+            $("#menu").html(template());
+        }, 'html');
     }
 
 };

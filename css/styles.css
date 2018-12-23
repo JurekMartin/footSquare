@@ -1,0 +1,64 @@
+/**************
+    GENERAL
+**************/
+
+body {
+    height: 98vh;
+    width: 98vw;
+    overflow: hidden;
+    position: relative;
+}
+
+/**************
+    GAME
+**************/
+
+.game-info {
+    text-align: center;
+    position: relative;
+    top: 4px;
+}
+
+#game-canvas {
+    border: 1px solid black;
+    height: 94vh;
+    width: 98vw;
+    position: absolute;
+    bottom: 0
+}
+
+/**************
+    MENU
+**************/
+
+#menu {
+    width: 80%;
+    max-height: 80%;
+    border: 1px solid black;
+    padding: 20px 0;
+    overflow: auto;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+}
+
+.menu-header {
+    font-size: 45px;
+    text-align: center;
+}
+
+#menu ol {
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#menu ol li {
+    border: 1px solid black;
+    width: 80%;
+    text-align: center;
+    margin: 10px;
+    font-size: 30px;
+}

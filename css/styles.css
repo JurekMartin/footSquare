@@ -3,10 +3,8 @@
 **************/
 
 body {
-    height: 98vh;
-    width: 98vw;
     overflow: hidden;
-    position: relative;
+    margin: 0;
 }
 
 /**************
@@ -16,15 +14,15 @@ body {
 .game-info {
     text-align: center;
     position: relative;
-    top: 4px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #game-canvas {
     border: 1px solid black;
-    height: 94vh;
-    width: 98vw;
-    position: absolute;
-    bottom: 0
+    margin-left: 25px;
 }
 
 /**************
@@ -47,6 +45,10 @@ body {
     text-align: center;
 }
 
+.menu-items li:hover {
+    background: lightblue;
+}
+
 #menu ol {
     list-style-type: none;
     padding: 0;
@@ -61,4 +63,5 @@ body {
     text-align: center;
     margin: 10px;
     font-size: 30px;
+    cursor: pointer;
 }

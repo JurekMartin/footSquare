@@ -1,8 +1,8 @@
-import { domManager } from './domManager.js';
-import { gameManager } from './gameManager.js';
-
 domManager.loadTemplates()
     .then(() => {
-        domManager.toggleElementById("menu", false);
+        domManager.toggleElementById("menu", true);
+        domManager.toggleElementById("game-canvas", false);
+        domManager.initializeCanvasSize();
+        window.onresize = () => domManager.initializeCanvasSize();
     })
 

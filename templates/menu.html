@@ -1,12 +1,19 @@
 
 <div class = "menu-container centered-container">
     <div class = "menu-header"> Menu! </div>
-    <ol class = "items">
-        <li>Item</li>
-        <li>Itema</li>
-        <li>Itemb</li>
-        <li>Itemc</li>
+    <ol class = "menu-items">
+        <li
+            onclick="
+                domManager.toggleElementById('menu', false);
+                domManager.toggleElementById('game-canvas', true);
+                gameManager.newGame();
+            "
+        >
+            New game
+        </li>
 
+        <li>Options</li>
+        <li>Exit</li>
     </ol>
 </div>
 

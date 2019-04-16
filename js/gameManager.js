@@ -30,7 +30,9 @@ const gameManager = {
             balls: [],
             players: [],
             barriers: [],
-            goalAreas: []
+            goalAreas: [],
+            // We need to manually set the order so that we e.g. draw goalAreas first and players on them, not vice versa
+            orderedObjectsKeys: ["goalAreas", "balls", "players", "barriers"]
         }
     },
 
@@ -51,7 +53,7 @@ const gameManager = {
         player.xPosition = x - player.width/2;
         player.yPosition = y - player.height/2;
         player.color = color;
-        // TODO: CONTROLS
+        // TODO: CONTROLS... from settings
 
         gameData.gameObjects.players.push(player);
     },
@@ -178,6 +180,7 @@ const gameManager = {
     },
 
     handleGameStep() {
+        physicsManager.resolveControls();
         graphicsManager.drawAllObjects();
         // draw everything
         // compute energies
@@ -185,7 +188,7 @@ const gameManager = {
         // resolve situations - goals etc.
     },
 
-    startGameTicks(fps = 2) {
+    startGameTicks(fps = 30) {
         // try to use requestAnimationFrame
         // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 

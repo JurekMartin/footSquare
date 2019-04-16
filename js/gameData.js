@@ -9,10 +9,13 @@ const gameData = {
     },
 
     gameObjects: {
+        // NOTE: this will be reset by resetGameObjects function
         balls: [],
         players: [],
         barriers: [],
-        goalAreas: []
+        goalAreas: [],
+        // We need to manually set the order so that we e.g. draw goalAreas first and players on them, not vice versa
+        orderedObjectsKeys: ["goalAreas", "balls", "players", "barriers"]
     },
 
     objectModels: {
@@ -43,12 +46,14 @@ const gameData = {
             canMove: true,
             enginePower: 0,
             type: "player",
-            upKey: 38, // arrow up
-            downKey: 40, // arrow down
-            leftKey: 37, //arrow left
-            rightKey: 39, //arrow right
-            specialKey1: 32, //space
-            specialKey2: 17, //right control
+            controls: {
+                up: 38, // arrow up
+                down: 40, // arrow down
+                left: 37, //arrow left
+                right: 39, //arrow right
+                special1: 32, //space
+                special2: 17, //right control
+            },
             solid: true
         }},
 
@@ -77,6 +82,28 @@ const gameData = {
             type: "goal",
             solid: false
         }}
-    }
+    },
+
+    keyNumbers: {
+        left:37,
+        right:39,
+        up:38,
+        down:40,
+        w:87,
+        a:65,
+        s:83,
+        d:68,
+        num4:100,
+        num6:102,
+        num8:104,
+        num5:101,
+        j:74,
+        k:75,
+        l:76,
+        i:73,
+        enter:13
+    },
+
+    keysDown: []
 
 }

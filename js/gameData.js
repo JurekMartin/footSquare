@@ -59,7 +59,7 @@ const gameData = {
             // We will probably rewrite only one of the dimension
             weight: 20,
             height: 20,
-            width: 0,
+            width: 20,
             color: "blue",
             canMove: false,
             type: "barrier",

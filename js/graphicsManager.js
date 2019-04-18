@@ -20,7 +20,7 @@ const graphicsManager = {
         this.clearGameCanvas();
         const objects = gameData.gameObjects;
         const scale = gameData.gameSize.drawScale;
-        const orderedObjectsKeys = objects.orderedObjectsKeys;
+        const orderedObjectsKeys = gameData.orderedObjectsKeys;
         
         orderedObjectsKeys.forEach(key => {
             objects[key].forEach(object => {

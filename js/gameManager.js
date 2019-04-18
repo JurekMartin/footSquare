@@ -31,8 +31,6 @@ const gameManager = {
             players: [],
             barriers: [],
             goalAreas: [],
-            // We need to manually set the order so that we e.g. draw goalAreas first and players on them, not vice versa
-            orderedObjectsKeys: ["goalAreas", "balls", "players", "barriers"]
         }
     },
 
@@ -181,6 +179,7 @@ const gameManager = {
 
     handleGameStep() {
         physicsManager.resolveControls();
+        physicsManager.moveThings();
         graphicsManager.drawAllObjects();
         // draw everything
         // compute energies

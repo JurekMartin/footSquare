@@ -8,14 +8,15 @@ const gameData = {
         drawScale: 1,
     },
 
+    // We need to manually set the order so that we e.g. draw goalAreas first and players on them, not vice versa
+    orderedObjectsKeys: ["goalAreas", "balls", "players", "barriers"],
+
     gameObjects: {
         // NOTE: this will be reset by resetGameObjects function
         balls: [],
         players: [],
         barriers: [],
         goalAreas: [],
-        // We need to manually set the order so that we e.g. draw goalAreas first and players on them, not vice versa
-        orderedObjectsKeys: ["goalAreas", "balls", "players", "barriers"]
     },
 
     objectModels: {
@@ -23,6 +24,8 @@ const gameData = {
         ball: () => { return {
             xPosition: 0,
             yPosition: 0,
+            xDesiredPosition: 0,
+            yDesiredPosition: 0,
             xEnergy: 0,
             yEnergy: 0,
             weight: 10,
@@ -31,12 +34,15 @@ const gameData = {
             color: "red",
             canMove: true,
             type: "ball",
-            solid: true
+            solid: true,
+            friction: 0.003
         }},
 
         player: () => { return {
             xPosition: 0,
             yPosition: 0,
+            xDesiredPosition: 0,
+            yDesiredPosition: 0,
             xEnergy: 0,
             yEnergy: 0,
             weight: 100,
@@ -44,7 +50,10 @@ const gameData = {
             width: 50,
             color: "yellow",
             canMove: true,
-            enginePower: 0,
+            maxVelocity: 20, //game units per frame
+            maxEnergy: 2000, //weight * max velocity
+            friction: 0.05, // how much energy is lost per frame
+            enginePower: 100,
             type: "player",
             controls: {
                 up: 38, // arrow up

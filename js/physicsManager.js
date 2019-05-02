@@ -45,8 +45,11 @@ const physicsManager = {
                     object.yDesiredPosition = object.yPosition + object.yEnergy/object.weight;
 
                     // REMOVE IN THE END
-                    object.xPosition += object.xEnergy/object.weight;
-                    object.yPosition += object.yEnergy/object.weight;
+                    object.xPosition = object.xDesiredPosition;
+                    object.yPosition = object.yDesiredPosition;
+                } else {
+                    object.xDesiredPosition = object.xPosition;
+                    object.yDesiredPosition = object.yPosition;
                 }
 
             })
@@ -81,7 +84,7 @@ const physicsManager = {
 
                         if (ii === i && yyy <= yy) {
                         } else {
-                            this.tellIfTwoObjectsCollide(evaluatedObject, objects[objKeys[ii]][yyy]);
+                            this.resolveCollisionsOfSolidObjects(evaluatedObject, objects[objKeys[ii]][yyy]);
                         }
 
                     }
@@ -90,37 +93,41 @@ const physicsManager = {
         }
     },
 
-    tellIfTwoObjectsCollide(object1, object2) {
-
-        // BACHA! ŘEŠENÍ KOLIZÍ:
-        // Porovnávám vždy jen to, KAM CHTĚJÍ objekty jít!
-        // udělám první porovnání. Ty, co kolidujou, si předají energii a ZAČNOU CHTÍT stát na místě
-        // udělám druhé porovnání, protože nově někdo, kdo se tvářil, že někde není, tam může být
-        // protože začal chtít stát na místě. Nové kolize se zase chovají normálně - předají si energii
-        // a začnou chtít stát na místě.
-        // Díky tomu, že z prvního porovnání už nám ty, co kolidovaly, stojí na místě, tak spolu nemůžou
-        // zkolidovat podruhý!
-        // NAKONEC: každý se pohne tam, kam by podle aktuálního stavu energie měl, a to za předpokladu, že
-        // na daném mástě je volno
+    resolveCollisionsOfSolidObjects(object1, object2) {
 
         // Both objects have their x and y desiredPosition declared from moveThings
 
         let object1UpperBoundary, object1LeftBoundary, object1RightBoundary, object1BottomBoundary;
         let object2UpperBoundary, object2LeftBoundary, object2RightBoundary, object2BottomBoundary;
 
-        object1UpperBoundary = object1.yPosition;
-        object1BottomBoundary = object1.yPosition + object1.height;
-        object1LeftBoundary = object1.xPosition;
-        object1RightBoundary = object1.xPosition + object1.width;
+        object1UpperBoundary = object1.yDesiredPosition;
+        object1BottomBoundary = object1.yDesiredPosition + object1.height;
+        object1LeftBoundary = object1.xDesiredPosition;
+        object1RightBoundary = object1.xDesiredPosition + object1.width;
 
-        object2UpperBoundary = object2.yPosition;
-        object2BottomBoundary = object2.yPosition + object2.height;
-        object2LeftBoundary = object2.xPosition;
-        object2RightBoundary = object2.xPosition + object2.width;
-
-        console.log(object1, object2)
+        object2UpperBoundary = object2.yDesiredPosition;
+        object2BottomBoundary = object2.yDesiredPosition + object2.height;
+        object2LeftBoundary = object2.xDesiredPosition;
+        object2RightBoundary = object2.xDesiredPosition + object2.width;
 
         // DO THEY COLLIDE?
+
+        if (
+            (
+                // This condition checks if they "collide" on the Y axis. They really collide only if they collide on the X axis as well
+                (object1UpperBoundary > object2UpperBoundary && object1UpperBoundary < object2BottomBoundary) ||
+                (object1BottomBoundary < object2BottomBoundary && object1BottomBoundary > object2UpperBoundary)
+            ) &&
+            (
+                // X axis "collision" check
+                (object1RightBoundary < object2RightBoundary && object1RightBoundary > object2LeftBoundary) ||
+                (object1LeftBoundary > object2LeftBoundary && object1LeftBoundary < object2RightBoundary)
+            )
+        ) {
+            console.log("object1 object2 collision:", object1, object2)
+            object1.color = "yellow";
+            object2.color = "orange";
+        }
     },
 
     distributeCollisionEnergy() {

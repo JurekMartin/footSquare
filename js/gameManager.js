@@ -21,7 +21,14 @@ const gameManager = {
         this.addGoalArea(gameSize.width*0.07, gameSize.height*0.25, gameSize.width*0.1, gameSize.height*0.5, "right", "green");
         this.addGoalArea(gameSize.width*0.83, gameSize.height*0.25, gameSize.width*0.1, gameSize.height*0.5, "left", "purple");
         this.addPlayer(gameSize.width*0.035, gameSize.height/2, "coral");
-        this.addPlayer(gameSize.width*0.965, gameSize.height/2, "blue");
+        this.addPlayer(gameSize.width*0.965, gameSize.height/2, "blue", {
+            up: gameData.keyNumbers.w,
+            down: gameData.keyNumbers.s,
+            left: gameData.keyNumbers.a,
+            right: gameData.keyNumbers.d,
+            special: gameData.keyNumbers.j,
+            special2: gameData.keyNumbers.k
+        });
         this.addBall(gameData.gameSize.width/2, gameData.gameSize.height/2);
     },
 
@@ -51,8 +58,7 @@ const gameManager = {
         player.xPosition = x - player.width/2;
         player.yPosition = y - player.height/2;
         player.color = color;
-        // TODO: CONTROLS... from settings
-
+        if (controls) {player.controls = controls}
         gameData.gameObjects.players.push(player);
     },
 
@@ -227,7 +233,7 @@ const gameManager = {
                 // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
                 then = now - (elapsed % fpsInterval);
 
-                console.log("animating");
+//                console.log("animating");
 
                 gameManager.handleGameStep();
             }

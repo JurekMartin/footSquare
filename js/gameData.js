@@ -77,7 +77,9 @@ const gameData = {
             color: "blue",
             canMove: false,
             type: "barrier",
-            solid: true
+            solid: true,
+            xEnergy: 0,
+            yEnergy: 0
         }},
 
         goalArea: () => { return {

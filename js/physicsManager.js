@@ -43,10 +43,6 @@ const physicsManager = {
 
                     object.xDesiredPosition = object.xPosition + object.xEnergy/object.weight;
                     object.yDesiredPosition = object.yPosition + object.yEnergy/object.weight;
-
-                    // REMOVE IN THE END
-                    object.xPosition = object.xDesiredPosition;
-                    object.yPosition = object.yDesiredPosition;
                 } else {
                     object.xDesiredPosition = object.xPosition;
                     object.yDesiredPosition = object.yPosition;
@@ -66,6 +62,7 @@ const physicsManager = {
         
 
         // this will be come crazy iterating here...
+
         for (let i = 0; i < objKeys.length; i++) {
             for (let y = 0; y < objects[objKeys[i]].length; y++) {
                 const evaluatedObject = objects[objKeys[i]][y];
@@ -91,6 +88,16 @@ const physicsManager = {
                 }
             }
         }
+
+        // SIMPLE MOVING OBJECTS, REMOVE IN THE END
+        objKeys.forEach(key => {
+            objects[key].forEach(object => {
+                if (object.canMove) {
+                    object.xPosition = object.xDesiredPosition;
+                    object.yPosition = object.yDesiredPosition;
+                }
+            })
+        })
     },
 
     resolveCollisionsOfSolidObjects(object1, object2) {
@@ -124,13 +131,117 @@ const physicsManager = {
                 (object1LeftBoundary > object2LeftBoundary && object1LeftBoundary < object2RightBoundary)
             )
         ) {
+            this.distributeCollisionEnergy(object1, object2);
             console.log("object1 object2 collision:", object1, object2)
-            object1.color = "yellow";
-            object2.color = "orange";
+//            object1.color = "yellow";
+//            object2.color = "orange";
         }
     },
 
-    distributeCollisionEnergy() {
+    distributeCollisionEnergy(object1, object2) {
+        // Two objects collided. We need to tell how they will exchange energies now.
+        // Note that we know they collided and can count on that
+        // If one of them is solid && not moveabnle, than the other one will just bounce perfectly
+        // Otherwise some move serious "physics" will take place
+        // Note that because of we compare each pair of objects only once we must check whether
+        // obj1 collides with obj2 and if obj2 collides with obj1 at the same time
+
+
+        let object1UpperBoundary, object1LeftBoundary, object1RightBoundary, object1BottomBoundary;
+        let object2UpperBoundary, object2LeftBoundary, object2RightBoundary, object2BottomBoundary;
+        let object1UpperDesiredBoundary, object1LeftDesiredBoundary, object1RightDesiredBoundary, object1BottomDesiredBoundary;
+        let object2UpperDesiredBoundary, object2LeftDesiredBoundary, object2RightDesiredBoundary, object2BottomDesiredBoundary;
+
+        object1UpperDesiredBoundary = object1.yDesiredPosition;
+        object1BottomDesiredBoundary = object1.yDesiredPosition + object1.height;
+        object1LeftDesiredBoundary = object1.xDesiredPosition;
+        object1RightDesiredBoundary = object1.xDesiredPosition + object1.width;
+
+        object2UpperDesiredBoundary = object2.yDesiredPosition;
+        object2BottomDesiredBoundary = object2.yDesiredPosition + object2.height;
+        object2LeftDesiredBoundary = object2.xDesiredPosition;
+        object2RightDesiredBoundary = object2.xDesiredPosition + object2.width;
+
+        object1UpperBoundary = object1.yPosition;
+        object1BottomBoundary = object1.yPosition + object1.height;
+        object1LeftBoundary = object1.xPosition;
+        object1RightBoundary = object1.xPosition + object1.width;
+
+        object2UpperBoundary = object2.yPosition;
+        object2BottomBoundary = object2.yPosition + object2.height;
+        object2LeftBoundary = object2.xPosition;
+        object2RightBoundary = object2.xPosition + object2.width;
+
+        // Like in css - uppper, right, bottom, left
+        const collisionDirections = [false, false, false, false];
+
+        // Check left collision
+        if (
+            (
+                object1RightBoundary < object2LeftDesiredBoundary &&
+                object1RightDesiredBoundary > object2LeftDesiredBoundary
+            ) ||
+            (
+                object2LeftBoundary > object1RightDesiredBoundary &&
+                object2LeftDesiredBoundary < object1RightDesiredBoundary
+            )
+        ) {
+            // collision from left
+            collisionDirections[3] = true;
+            object1.color = "turquoise";
+        }
+
+        // Check right collision
+        if (
+            (
+                object1LeftBoundary > object2RightDesiredBoundary &&
+                object1LeftDesiredBoundary < object2RightDesiredBoundary
+            ) ||
+            (
+                object2RightBoundary < object1LeftDesiredBoundary &&
+                object2RightDesiredBoundary > object1LeftDesiredBoundary
+            )
+
+        ) {
+            // collision from right
+            collisionDirections[1] = true;
+            object1.color = "yellow";
+        }
+
+        // Check upper collision
+        if (
+            (
+                object1BottomBoundary < object2UpperDesiredBoundary &&
+                object1BottomDesiredBoundary > object2UpperDesiredBoundary
+            ) ||
+            (
+                object2UpperBoundary > object1BottomDesiredBoundary &&
+                object2UpperDesiredBoundary < object1BottomDesiredBoundary
+            )
+
+        ) {
+            // collision from up
+            collisionDirections[0] = true;
+            object1.color = "pink";
+        }
+
+        // Check lower collision
+        if (
+            (
+                object1UpperBoundary > object2BottomDesiredBoundary &&
+                object1UpperDesiredBoundary < object2BottomDesiredBoundary
+            ) ||
+            (
+                object2BottomBoundary < object1UpperDesiredBoundary &&
+                object2BottomDesiredBoundary > object1UpperDesiredBoundary   
+            )
+
+        ) {
+            // collision from bottom
+            collisionDirections[2] = true;
+            object1.color = "black";
+        }
+
 
     }
 

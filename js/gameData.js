@@ -28,14 +28,14 @@ const gameData = {
             yDesiredPosition: 0,
             xEnergy: 0,
             yEnergy: 0,
-            weight: 10,
+            weight: 30,
             height: 20,
             width: 20,
             color: "red",
             canMove: true,
             type: "ball",
             solid: true,
-            friction: 0.003
+            friction: 0 //0.0003
         }},
 
         player: () => { return {
@@ -47,13 +47,13 @@ const gameData = {
             yEnergy: 0,
             weight: 100,
             height: 100,
-            width: 50,
+            width: 66,
             color: "yellow",
             canMove: true,
             maxVelocity: 20, //game units per frame
             maxEnergy: 2000, //weight * max velocity
             friction: 0.05, // how much energy is lost per frame
-            enginePower: 100,
+            enginePower: 85,
             type: "player",
             controls: {
                 up: 38, // arrow up

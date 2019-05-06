@@ -193,7 +193,7 @@ const gameManager = {
         // resolve situations - goals etc.
     },
 
-    startGameTicks(fps = 30) {
+    startGameTicks(fps = 40) {
         // try to use requestAnimationFrame
         // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 

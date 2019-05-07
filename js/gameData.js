@@ -28,7 +28,7 @@ const gameData = {
             yDesiredPosition: 0,
             xEnergy: 0,
             yEnergy: 0,
-            weight: 30,
+            weight: 15,
             height: 20,
             width: 20,
             color: "red",
@@ -53,7 +53,7 @@ const gameData = {
             maxVelocity: 20, //game units per frame
             maxEnergy: 2000, //weight * max velocity
             friction: 0.05, // how much energy is lost per frame
-            enginePower: 85,
+            enginePower: 95,
             type: "player",
             controls: {
                 up: 38, // arrow up

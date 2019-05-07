@@ -345,8 +345,8 @@ const physicsManager = {
                 object2.yEnergy += (v2 - u2)*object2.weight;
 
 
-                object1.xEnergy = object1.xEnergy - object1.xEnergy*(1-0.5) + object2.xEnergy*0.5;
-                object2.xEnergy = object2.xEnergy - object2.xEnergy*(1-0.5) + object1.xEnergy*0.5;
+                object1.xEnergy = object1.xEnergy - object1.xEnergy*(1-0.35) + object2.xEnergy*0.35;
+                object2.xEnergy = object2.xEnergy - object2.xEnergy*(1-0.35) + object1.xEnergy*0.35;
             } else if (!collisionDirections[0] && !collisionDirections[2] && (collisionDirections[1] || collisionDirections[3])){
                 // left/right collision
                 // v = new velocity, m = weight, u = old velocity
@@ -363,8 +363,8 @@ const physicsManager = {
                 object1.xEnergy += (v1 - u1)*object1.weight;
                 object2.xEnergy += (v2 - u2)*object2.weight;
 
-                object1.yEnergy = object1.yEnergy - object1.yEnergy*(1-0.5) + object2.yEnergy*0.5;
-                object2.yEnergy = object2.yEnergy - object2.yEnergy*(1-0.5) + object1.yEnergy*0.5;
+                object1.yEnergy = object1.yEnergy - object1.yEnergy*(1-0.35) + object2.yEnergy*0.35;
+                object2.yEnergy = object2.yEnergy - object2.yEnergy*(1-0.35) + object1.yEnergy*0.35;
             } else {
                 // this is both left/right and upper/lower collision;
                 let v1, m1, u1, v2, m2, u2

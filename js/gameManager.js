@@ -83,7 +83,7 @@ const gameManager = {
                 obj = newBarriers[0];
                 obj.xPosition = x;
                 obj.yPosition = y;
-                obj.width = width;
+                obj.width = width - obj.height;
 
                 // right barrier
                 obj = newBarriers[1];
@@ -95,7 +95,7 @@ const gameManager = {
                 obj = newBarriers[2];
                 obj.xPosition = x;
                 obj.yPosition = y + height - obj.height;
-                obj.width = width;
+                obj.width = width - obj.height;
 
                 obj = newGoalAreas[0];
                 obj.xPosition = x
@@ -109,9 +109,9 @@ const gameManager = {
 
                 // upper barrier
                 obj = newBarriers[0];
-                obj.xPosition = x;
+                obj.xPosition = x + obj.height;
                 obj.yPosition = y;
-                obj.width = width;
+                obj.width = width - obj.height;
 
                 // left barrier
                 obj = newBarriers[1];
@@ -121,9 +121,9 @@ const gameManager = {
 
                 // lower barrier
                 obj = newBarriers[2];
-                obj.xPosition = x;
+                obj.xPosition = x + obj.height;
                 obj.yPosition = y + height - obj.height;
-                obj.width = width;
+                obj.width = width - obj.height;
 
                 obj = newGoalAreas[0];
                 obj.xPosition = x + newBarriers[1].width;
@@ -193,7 +193,7 @@ const gameManager = {
         // resolve situations - goals etc.
     },
 
-    startGameTicks(fps = 40) {
+    startGameTicks(fps = 45) {
         // try to use requestAnimationFrame
         // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 
